@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 const PORT = process.env.POST || 5000;
 const jsonParser = bodyParser.json();
-
+require('dotenv').config();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(jsonParser);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,9 +27,11 @@ app.post('/api/forma', (req, res) => {
   const smtpTransprot = nodemailer.createTransport({
     service: 'Gmail',
     port: 465,
+    host: 'smtp.gmail.com',
+    secure: true,
     auth: {
       user: 'godkor200@gmail.com', // gmail 계정 아이디를 입력
-      pass: 'Dbqudrnr1!', // gmail 계정의 비밀번호를 입력
+      pass: process.env.MAIL_PS, // gmail 계정의 비밀번호를 입력
     },
   });
 
